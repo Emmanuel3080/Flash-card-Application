@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-// import connectDb from "./DbConfig/connectDatabase";
+import connectDb from "./DbConfig/connectDatabase.js";
 
 const app = express();
 
@@ -18,4 +18,4 @@ app.get("/api/v1",(req,res)=>{
 })
 
 
-// connectDb()
+connectDb()
