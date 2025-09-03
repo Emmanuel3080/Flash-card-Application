@@ -40,6 +40,7 @@ const handleSignUP = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
@@ -83,6 +84,7 @@ const handleSignIn = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
@@ -90,13 +92,13 @@ const handleLogOut = async (req, res) => {
   const { token } = req.body;
   try {
     await blacklistedTokenModel.create({ token });
-    return res.status(401).json({     
+    return res.status(401).json({
       Message: "Logout Successfull",
       Status: "Success",
     });
   } catch (error) {
     console.log(error);
   }
-};  
+};
 
 export { handleSignUP, handleSignIn, handleLogOut };
