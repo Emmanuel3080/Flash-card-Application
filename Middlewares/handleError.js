@@ -16,11 +16,12 @@ const handleError = (err, req, res, next) => {
       Message: error.message,
       Status: "Error",
     });
-  } else {
+  }
+  else{
     res.status(500).json({
-      Message: "Oops Something went wrong",
-      Status: "Error",
-    });
+        Message : "Oops Something went wrong",
+        Status : "Error"
+    })
   }
 };
 
