@@ -3,9 +3,13 @@ import dotenv from "dotenv";
 import connectDb from "./DbConfig/connectDatabase.js";
 import authRouter from "./Router/authRouter.js";
 
+import cors from "cors"
+
 const app = express();
 
 app.use(express.json())
+
+app.use(cors())
 
 dotenv.config();
 
