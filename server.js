@@ -6,6 +6,9 @@ import authRouter from "./Router/authRouter.js";
 import cors from "cors";
 import handleError from "./Middlewares/handleError.js";
 
+import morgan from "morgan";
+import deckRouter from "./Router/deckRouter.js";
+
 const app = express();
 
 app.use(express.json());
@@ -13,6 +16,10 @@ app.use(express.json());
 app.use(cors());
 
 dotenv.config();
+
+app.use(morgan("dev"))
+
+
 
 const portNumber = process.env.PORT;
 
@@ -24,7 +31,8 @@ app.get("/api/v1", (req, res) => {
   res.send("Welcome Jhorrr");
 });
 
-app.use("/api/v1/auth", authRouter);
+app.use("/api/v1", authRouter);
+app.use("/api/v1", deckRouter)
 
 connectDb();
 
