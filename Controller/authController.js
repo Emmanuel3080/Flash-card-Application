@@ -101,4 +101,25 @@ const handleLogOut = async (req, res) => {
   }
 };
 
-export { handleSignUP, handleSignIn, handleLogOut };
+const getSingleUser = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(401).json({
+        Message: "User Not Found",
+        Status: "Error",
+      });
+    }
+    return res.status(201).json({
+      Message: "User Fetched Successfully",
+      Status: "Sucess",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export { handleSignUP, handleSignIn, handleLogOut, getSingleUser };

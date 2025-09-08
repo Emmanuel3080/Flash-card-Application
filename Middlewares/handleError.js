@@ -16,6 +16,15 @@ const handleDuplicateError = (err) => {
   };
 };
 
+const handleCastError = (err) => {
+  const errMessage = `This (id)${err.value} doesn't exist in ${err.kind} Field`;
+
+  return {
+    errMessage,
+    statusCode: 400,
+  };
+};
+
 const handleError = (err, req, res, next) => {
   //   res.json("Errororo");
 
@@ -26,6 +35,12 @@ const handleError = (err, req, res, next) => {
     res.status(error.statusCode).json({
       Message: error.errMessage,
       Status: "Error",
+    });
+  } else if (err.name == "CastError") {
+    const error = handleCastError(err);
+    res.status(error.statusCode).json({
+      Message: error.errMessage,
+      Status: "Failedd",
     });
   } else {
     res.status(500).json({

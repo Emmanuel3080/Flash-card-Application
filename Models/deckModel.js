@@ -18,7 +18,7 @@ const deckSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Deck Name is Required"],
-      unique: true,
+      // unique: true,
     },
     description: {
       type: String,
