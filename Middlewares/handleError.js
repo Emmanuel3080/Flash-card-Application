@@ -25,6 +25,15 @@ const handleCastError = (err) => {
   };
 };
 
+const handleJsonWebTokenErr = (err) => {
+  const errMessage = `Invalid Signature`;
+
+  return {
+    errMessage,
+    statusCode: 400,
+  };
+};
+
 const handleError = (err, req, res, next) => {
   //   res.json("Errororo");
 
@@ -41,6 +50,12 @@ const handleError = (err, req, res, next) => {
     res.status(error.statusCode).json({
       Message: error.errMessage,
       Status: "Failedd",
+    });
+  } else if (err.name == "JsonWebTokenError") {
+    const error = handleJsonWebTokenErr(err);
+    res.status(error.statusCode).json({
+      Message: error.errMessage,
+      Status: "Error",
     });
   } else {
     res.status(500).json({

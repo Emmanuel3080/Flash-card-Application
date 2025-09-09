@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const flashCardSchema = new mongoose.Schema(
   {
-    questions: {
+    question: {
       type: String,
       required: [true, "Question Is Required"],
     },

@@ -24,7 +24,7 @@ app.use(morgan("dev"))
 const portNumber = process.env.PORT;
 
 app.listen(portNumber, () => {
-  console.log(`Port is Runnig on http://localhost:${portNumber}`);
+  console.log(`Port is Running on http://localhost:${portNumber}`);
 });
 
 app.get("/api/v1", (req, res) => {

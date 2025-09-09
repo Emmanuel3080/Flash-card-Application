@@ -1,6 +1,9 @@
 import express from "express";
 import {
   addNewDeckController,
+  deleteAlldecks,
+  deleteSingledeck,
+  generateQuiz,
   getAllDecksController,
   singleDeckHandler,
 } from "../Controller/DeckController.js";
@@ -10,6 +13,11 @@ const deckRouter = express.Router();
 
 deckRouter.post("/addDEck", isLogged, addNewDeckController);
 deckRouter.get("/deck/all", isLogged, getAllDecksController);
-deckRouter.get("/deck/:deckId", singleDeckHandler);
+deckRouter.get("/deck/:deckId", isLogged, singleDeckHandler);
+deckRouter.post("/generate-quiz", isLogged, generateQuiz);
+
+deckRouter.delete("/deck/delete/all", isLogged, deleteAlldecks);
+deckRouter.delete("/deck/delete/:deckId", isLogged, deleteSingledeck);
 
 export default deckRouter;
+            
