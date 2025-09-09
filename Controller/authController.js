@@ -159,3 +159,6 @@ const verifyToken = async (req, res, next) => {
   }
 };
 export { handleSignUP, handleSignIn, handleLogOut, getSingleUser, verifyToken };
+
+
+   
