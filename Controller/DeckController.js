@@ -36,20 +36,22 @@ const getAllDecksController = async (req, res, next) => {
   try {
     const decks = await deckModel
       .find({ student })
-      .populate("student", "email name -_id")
-      .select(["cards"]);
+      // .populate("student", "email name -_id")
+      // .select(["cards"]);
 
     if (!decks) {
       return res.status(401).json({
         Message: "Unable To fetch Decks",
-        Status: "Success",
+        Status: "Success",     
       });
     }
 
     const noOfQuestions = decks.reduce((total, deck) => {
       return total + deck.cards.length;
     }, 0);
-    return res.status(401).json({
+
+
+    return res.status(201).json({
       Message: "All Cards Fecthed",
       Status: "Sucess",
       No_Of_Cards: decks.length,
