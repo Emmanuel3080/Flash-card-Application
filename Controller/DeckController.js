@@ -214,12 +214,12 @@ const generateQuestion = async (req, res, next) => {
           },
         ],
       }),
-    });
+    });     
     const data = await response.json();
     res.json({
       Question: data.candidates[0].content.parts[0].text.replaceAll("\n", ""),
-    });
-
+    });                  
+       
     // const
   } catch (error) {
     console.log(error);
@@ -234,3 +234,4 @@ export {
   deleteAlldecks,
   generateQuestion,
 };
+    
