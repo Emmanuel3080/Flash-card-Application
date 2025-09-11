@@ -40,7 +40,7 @@ const isLogged = async (req, res, next) => {
         Message: "User Not Found",
         Status: "Error",
       });                                  
-                                       
+                                            
     }
 
     req.user = user;
