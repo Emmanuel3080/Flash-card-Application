@@ -100,7 +100,8 @@ const deleteSingledeck = async (req, res, next) => {
 const singleDeckHandler = async (req, res, next) => {
   const { deckId } = req.params;
   try {
-    const singleDeck = await deckModel.findById(deckId).populate("student");
+    const singleDeck = await deckModel.findById(deckId)
+    // populate("student");
 
     if (!singleDeck) {
       return res.status(401).json({
@@ -111,13 +112,13 @@ const singleDeckHandler = async (req, res, next) => {
 
     return res.status(201).json({
       Message: "All Cards Fetched",
-      status: "Success",
-      singleDeck,
+      status: "Success",            
+      singleDeck,  
     });
   } catch (error) {
     console.log(error);
     next(error);
-  }
+  }                       
 };
 
 const generateQuiz = async (req, res, next) => {
