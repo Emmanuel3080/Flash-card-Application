@@ -1,3 +1,4 @@
+import { text } from "express";
 import deckModel from "../Models/deckModel.js";
 import userModel from "../Models/userModel.js";
 
@@ -34,22 +35,20 @@ const getAllDecksController = async (req, res, next) => {
 
   // const getUser = /
   try {
-    const decks = await deckModel
-      .find({ student })
-      // .populate("student", "email name -_id")
-      // .select(["cards"]);
+    const decks = await deckModel.find({ student });
+    // .populate("student", "email name -_id")
+    // .select(["cards"]);
 
     if (!decks) {
       return res.status(401).json({
         Message: "Unable To fetch Decks",
-        Status: "Success",     
+        Status: "Success",
       });
     }
 
     const noOfQuestions = decks.reduce((total, deck) => {
       return total + deck.cards.length;
     }, 0);
-
 
     return res.status(201).json({
       Message: "All Cards Fecthed",
@@ -100,7 +99,7 @@ const deleteSingledeck = async (req, res, next) => {
 const singleDeckHandler = async (req, res, next) => {
   const { deckId } = req.params;
   try {
-    const singleDeck = await deckModel.findById(deckId)
+    const singleDeck = await deckModel.findById(deckId);
     // populate("student");
 
     if (!singleDeck) {
@@ -112,13 +111,13 @@ const singleDeckHandler = async (req, res, next) => {
 
     return res.status(201).json({
       Message: "All Cards Fetched",
-      status: "Success",            
-      singleDeck,  
+      status: "Success",
+      singleDeck,
     });
   } catch (error) {
     console.log(error);
     next(error);
-  }                       
+  }
 };
 
 const generateQuiz = async (req, res, next) => {
@@ -182,6 +181,50 @@ const generateQuiz = async (req, res, next) => {
     next(error);
   }
 };
+
+const generateQuestion = async (req, res, next) => {
+  const studentDept = req.user.department;
+
+  const { topic, numOfQuestions, level, techStack } = req.body;
+  try {
+    const prompt = `Hello , I'm a student of ${studentDept} currently in a bootcamp . Just Finished learning ${techStack} . I need you to help me generate ${numOfQuestions} questions and related options(three of the options should be incorrect) relating to this ${topic} under ${studentDept} for a ${level} developer
+    
+    
+         And Please don not return any comment or additional text. Just the updated array of question. Do Not add special character like *><?&%#;:.,' This response will be directly rendered on the front-end and it might break the code
+
+
+         Thanks my Guy👋🏾
+    
+    `;
+
+    const response = await fetch(`${process.env.Gemini_Url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-goog-api-key": process.env.GeminiApi,
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+    const data = await response.json();
+    res.json({
+      Question: data.candidates[0].content.parts[0].text.replaceAll("\n", ""),
+    });
+
+    // const
+  } catch (error) {
+    console.log(error);
+  }
+};
 export {
   addNewDeckController,
   getAllDecksController,
@@ -189,4 +232,5 @@ export {
   generateQuiz,
   deleteSingledeck,
   deleteAlldecks,
+  generateQuestion,
 };

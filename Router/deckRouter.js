@@ -3,6 +3,7 @@ import {
   addNewDeckController,
   deleteAlldecks,
   deleteSingledeck,
+  generateQuestion,
   generateQuiz,
   getAllDecksController,
   singleDeckHandler,
@@ -18,6 +19,6 @@ deckRouter.post("/generate-quiz", isLogged, generateQuiz);
 
 deckRouter.delete("/deck/delete/all", isLogged, deleteAlldecks);
 deckRouter.delete("/deck/delete/:deckId", isLogged, deleteSingledeck);
+deckRouter.post("/generate/question", isLogged, generateQuestion);
 
 export default deckRouter;
-            
